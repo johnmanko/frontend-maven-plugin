@@ -108,7 +108,7 @@ present).
 </plugin>
 ```
 
-You can also specify separate download roots for npm and node as they are stored in separate repos.
+You can also specify separate download roots for npm and node as they are stored in separate repos. In case the root configured requires authentication, you can specify a server ID from your maven settings file:
 
 ```xml
 <plugin>
@@ -116,6 +116,8 @@ You can also specify separate download roots for npm and node as they are stored
     <configuration>
         <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
         <nodeDownloadRoot>http://myproxy.example.org/nodejs/</nodeDownloadRoot>
+	<!-- optional: credentials to use from Maven settings to download node -->
+        <serverId>server001</serverId>
         <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
         <npmDownloadRoot>https://myproxy.example.org/npm/</npmDownloadRoot>
     </configuration>
@@ -193,6 +195,24 @@ By default, colors will be shown in the log.
 **Notice:** _Remember to gitignore the `node_modules` folder, unless you actually want to commit it. Npm packages will 
 always be installed in `node_modules` next to your `package.json`, which is default npm behavior._
 
+#### npx
+
+You can also use [`npx` command](https://blog.npmjs.org/post/162869356040/introducing-npx-an-npm-package-runner), enabling you to execute the CLI of installed packages without a run-script, or even packages that aren't installed at all.
+
+```xml
+<execution>
+    <id>say hello</id>
+    <goals>
+        <goal>npx</goal>
+    </goals>
+
+    <phase>generate-resources</phase>
+
+    <configuration>
+        <arguments>cowsay hello</arguments>
+    </configuration>
+</execution>
+```
 
 ### Running yarn
 
